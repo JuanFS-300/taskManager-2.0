@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+class TelaMenu extends JFrame {
+    private CardLayout cardLayout;
+    private JPanel painelPrincipal;
+    private List<Atividade> tarefas;
+
+    public TelaMenu() {
+        tarefas = new ArrayList<>();
+
+        setTitle("Task Manager");
+        setSize(500, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menu");
+        JMenuItem adicionarTarefaItem = new JMenuItem("Adicionar Tarefa");
+        JMenuItem listarTarefasItem = new JMenuItem("Listar Tarefas");
+        JMenuItem filtrarTarefasItem = new JMenuItem("Filtrar Tarefas");
+        JMenuItem voltar = new JMenuItem("Voltar à tela inicial");
+
+        menu.add(adicionarTarefaItem);
+        menu.add(listarTarefasItem);
+        menu.add(filtrarTarefasItem);
+        menu.add(voltar);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
+
+        cardLayout = new CardLayout();
+        painelPrincipal = new JPanel(cardLayout);
+
+        painelPrincipal.add(criarTelaBoasVindas(), "Tela Boas Vindas");
+        painelPrincipal.add(criarTelaAdicionarTarefa(), "Tela Adicionar Tarefa");
+        painelPrincipal.add(criarTelaListarTarefas(), "Tela Listar Tarefas");
+        painelPrincipal.add(criarTelaFiltrarTarefas(), "Tela Filtrar Tarefas");
+
+        add(painelPrincipal, BorderLayout.CENTER);
+
+        adicionarTarefaItem.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Adicionar Tarefa"));
+        listarTarefasItem.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Listar Tarefas"));
+        filtrarTarefasItem.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Filtrar Tarefas"));
+        voltar.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Boas Vindas"));
+    }
+
+    private JPanel criarTelaBoasVindas() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        JLabel mensagemBoasVindas = new JLabel("Bem-vindo ao Task Manager!", JLabel.CENTER);
+        mensagemBoasVindas.setFont(new Font("Arial", Font.BOLD, 16));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(mensagemBoasVindas, gbc);
+
+        JPanel botoesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        JButton btnAdicionarTarefa = new JButton("Adicionar Tarefa");
+        JButton btnListarTarefas = new JButton("Listar Tarefas");
+        JButton btnFiltrarTarefas = new JButton("Filtrar Tarefas");
+
+        botoesPanel.add(btnAdicionarTarefa);
+        botoesPanel.add(btnListarTarefas);
+        botoesPanel.add(btnFiltrarTarefas);
+
+        gbc.gridy = 1;
+        panel.add(botoesPanel, gbc);
+
+        btn
